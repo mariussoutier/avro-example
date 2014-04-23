@@ -1,0 +1,57 @@
+@namespace("com.mariussoutier.avroexample.model")
+
+protocol TweetProtocol {
+
+  record User {
+    int id;
+    string idStr;
+    string name;
+    union { null, string } location = null;
+  }
+
+  record Coordinates {
+    // longitude, latitude;
+    array<double> coordinates;
+    string type = "Point";
+  }
+
+  record Hashtag {
+    array<int> indices;
+    string text;
+  }
+
+  record Url {
+    string displayUrl;
+    string expandedUrl;
+    array<int> indices;
+    string url;
+  }
+
+  record UserMention {
+    int id; // user id
+    string idStr;
+    array<int> indices;
+    string name; // user display name
+    string screenName; // user screen name
+  }
+
+  record Entities {
+    union { null, array<Hashtag> } hashtags = null;
+    union { null, array<UserMention> } mentions = null;
+    union { null, array<Url> } urls = null;
+  }
+
+  record Tweet {
+    int id;
+    string idStr;
+    string text;
+    User user;
+    union { null, Coordinates } coordinates = null;
+    Entities entities;
+    union { null, int } favoriteCount = null;
+    int retweetCount = 0;
+    union { null, string } lang = null;
+    long createdAt;
+  }
+
+}
